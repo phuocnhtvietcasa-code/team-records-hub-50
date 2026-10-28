@@ -10,7 +10,7 @@ export const REVENUE_COLORS = ["var(--revenue)", "var(--revenue-net)", "var(--re
 export const COST_COLORS = ["var(--revenue-coral)", "var(--revenue-gold)", "var(--revenue-purple)", "var(--revenue-teal)", "var(--revenue)"] as const;
 
 export function RevenueSection({ title, children, className, aside }: { title: string; children: React.ReactNode; className?: string; aside?: React.ReactNode }) {
-  return <section className={cn("min-w-0 rounded-xl border bg-card p-5 shadow-revenue sm:p-6", className)}><div className="mb-5 flex flex-wrap items-center justify-between gap-3"><h2 className="text-sm font-semibold">{title}</h2>{aside}</div>{children}</section>;
+  return <section className={cn("min-w-0 rounded-xl border bg-card p-4 shadow-revenue sm:p-6", className)}><div className="mb-5 flex flex-wrap items-center justify-between gap-3"><h2 className="text-sm font-semibold">{title}</h2>{aside}</div>{children}</section>;
 }
 
 export function Sparkline({ data, color, large = false }: { data: { value: number }[]; color: string; large?: boolean }) {
@@ -37,11 +37,11 @@ export function RevenueProgress({ pct, color, label }: { pct: number; color: str
 }
 
 export function DashboardFrame({ title, subtitle, today, children }: { title: string; subtitle: string; today: Date; children: React.ReactNode }) {
-  return <div className="sales-dashboard -m-4 min-h-screen space-y-6 p-4 md:-m-8 md:p-8"><header className="flex flex-wrap items-center justify-between gap-4 border-b pb-5"><div><h1 className="text-2xl font-semibold">{title}</h1><p className="mt-2 text-xs text-muted-foreground">{subtitle}</p></div><span className="rounded-lg border bg-card px-4 py-2.5 text-xs text-muted-foreground">{today.toLocaleDateString("vi-VN", { weekday: "long", day: "2-digit", month: "2-digit", year: "numeric" })}</span></header><div className="revenue-filters"><FilterBar /></div>{children}</div>;
+  return <div className="sales-dashboard -m-4 min-w-0 min-h-dvh space-y-6 p-4 md:-m-8 md:p-8"><header className="grid min-w-0 gap-3 border-b pb-5 sm:flex sm:flex-wrap sm:items-center sm:justify-between"><div className="min-w-0"><h1 className="text-2xl font-semibold">{title}</h1><p className="mt-2 text-xs text-muted-foreground">{subtitle}</p></div><span className="rounded-lg border bg-card px-4 py-2.5 text-xs text-muted-foreground">{today.toLocaleDateString("vi-VN", { weekday: "long", day: "2-digit", month: "2-digit", year: "numeric" })}</span></header><div className="revenue-filters"><FilterBar /></div>{children}</div>;
 }
 
 export function DashboardHero({ children, label }: { children: React.ReactNode; label: string }) {
-  return <section aria-label={label} className="bg-revenue-hero grid gap-8 rounded-2xl p-6 text-revenue-hero-foreground shadow-revenue sm:p-8 xl:grid-cols-[1.05fr_1.1fr_180px] xl:items-center">{children}</section>;
+  return <section aria-label={label} className="bg-revenue-hero grid min-w-0 gap-8 rounded-2xl p-4 text-revenue-hero-foreground shadow-revenue sm:p-8 xl:grid-cols-[minmax(0,1.05fr)_minmax(0,1.1fr)_180px] xl:items-center">{children}</section>;
 }
 
 export const KPI_STATUS_COLOR: Record<KpiStatus, string> = { missed: "var(--destructive)", near: "var(--warning)", achieved: "var(--success)" };

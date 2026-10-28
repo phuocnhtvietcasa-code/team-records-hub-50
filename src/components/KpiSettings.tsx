@@ -43,7 +43,7 @@ export function KpiSettings({ employees }: { employees: Employee[] }) {
       </div>
     </div>
     {isError && <p className="text-destructive">Không tải được mục tiêu KPI.</p>}
-    <div className="overflow-auto">
+    <div className="min-w-0 max-w-full overflow-auto overscroll-x-contain">
       <table className="w-full whitespace-nowrap text-sm">
         <thead className="bg-muted text-left text-xs text-muted-foreground"><tr><th className="p-3">Đối tượng</th><th>Kỳ</th><th className="text-right">Mục tiêu</th><th className="text-right">Thao tác</th></tr></thead>
         <tbody>{targets.filter((t) => t.target_year === year).map((t) => <tr className="border-t" key={t.id}>
@@ -66,7 +66,7 @@ export function KpiSettings({ employees }: { employees: Employee[] }) {
       <DialogContent><DialogHeader><DialogTitle>{edit?.id ? "Sửa mục tiêu KPI" : "Thêm mục tiêu KPI"}</DialogTitle></DialogHeader>
         {edit && <form className="space-y-4" onSubmit={(e) => { e.preventDefault(); void save(); }}>
           <div className="space-y-1"><Label>Đối tượng</Label><Select value={edit.employee_id ?? "company"} onValueChange={(v) => setEdit({ ...edit, employee_id: v === "company" ? null : v })}><SelectTrigger aria-label="Đối tượng KPI"><SelectValue /></SelectTrigger><SelectContent><SelectItem value="company">Tổng công ty</SelectItem>{employees.map((e) => <SelectItem key={e.id} value={e.id}>{e.full_name}</SelectItem>)}</SelectContent></Select></div>
-          <div className="grid grid-cols-2 gap-3">
+          <div className="grid min-w-0 gap-3 sm:grid-cols-2">
             <div className="space-y-1"><Label>Năm</Label><Input aria-label="Năm mục tiêu" type="number" min={2000} max={2200} required value={edit.target_year} onChange={(e) => setEdit({ ...edit, target_year: Number(e.target.value) })} /></div>
             <div className="space-y-1"><Label>Kỳ mục tiêu</Label><Select value={edit.period} onValueChange={(period) => setEdit({ ...edit, period, period_no: 1 })}><SelectTrigger aria-label="Kỳ mục tiêu"><SelectValue /></SelectTrigger><SelectContent>{Object.entries(periods).map(([key, label]) => <SelectItem key={key} value={key}>{label}</SelectItem>)}</SelectContent></Select></div>
           </div>
