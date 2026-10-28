@@ -154,12 +154,12 @@ function PhieuPage() {
 
   return (
     <div className="space-y-6">
-      <div className="flex flex-wrap items-end justify-between gap-4">
-        <h1 className="text-3xl font-semibold">Phiếu doanh số & công nợ</h1>
+      <div className="grid min-w-0 gap-4 sm:flex sm:flex-wrap sm:items-end sm:justify-between">
+        <h1 className="min-w-0 text-2xl font-semibold sm:text-3xl">Phiếu doanh số & công nợ</h1>
         <FilterBar />
       </div>
-      <div className={`grid gap-6 ${canWrite ? "xl:grid-cols-[420px_1fr]" : ""}`}>
-        {canWrite && <div className="h-fit rounded-xl border bg-card p-5 shadow-card">
+      <div className={`grid min-w-0 gap-6 ${canWrite ? "xl:grid-cols-[420px_minmax(0,1fr)]" : ""}`}>
+        {canWrite && <div className="min-w-0 h-fit rounded-xl border bg-card p-4 shadow-card sm:p-5">
           <h2 className="mb-4 text-lg font-semibold">Nhập phiếu mới</h2>
           {formEmployees.length === 0 ? (
             <p className="text-sm text-muted-foreground">Tài khoản của bạn chưa được liên kết với nhân viên. Liên hệ Admin.</p>
@@ -176,7 +176,7 @@ function PhieuPage() {
 
         <div className="min-w-0 rounded-xl border bg-card p-5 shadow-card">
           <div className="mb-4 flex flex-wrap items-center gap-2">
-            <div className="relative flex-1">
+            <div className="relative min-w-0 basis-full sm:flex-1 sm:basis-auto">
               <Search className="absolute left-3 top-2.5 h-4 w-4 text-muted-foreground" />
               <Input placeholder="Tìm số phiếu, khách hàng, công trình..." className="pl-9" value={q} onChange={(e) => setQ(e.target.value)} />
             </div>
@@ -185,7 +185,7 @@ function PhieuPage() {
             {selectedIds.length > 0 && <Button variant="destructive" disabled={deleting} onClick={() => setDeleteIds([...selectedIds])}><Trash2 className="h-4 w-4" />Xóa các phiếu đã chọn ({selectedIds.length})</Button>}
           </div>
           <p className="mb-2 text-xs text-muted-foreground">{rows.length} phiếu</p>
-          <div className="max-h-[70vh] overflow-auto">
+          <div className="min-w-0 max-w-full max-h-[70dvh] overflow-auto overscroll-x-contain" tabIndex={0} role="region" aria-label="Danh sách phiếu doanh số">
             <table className="w-full whitespace-nowrap text-sm">
               <thead className="sticky top-0 bg-card text-left text-xs text-muted-foreground">
                 <tr>
