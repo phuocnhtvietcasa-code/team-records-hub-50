@@ -1,4 +1,5 @@
 # Repository import
+- [x] Replace home-screen icons with the newly supplied Vietcasa logo and verify served files
 - [x] Optimize mobile/tablet layouts and drawer navigation
 - [x] Add home-screen manifest, Vietcasa icons, and iOS metadata
 - [x] Verify public mobile layouts and home-screen configuration; signed-in and physical-device installation checks remain blocked below
