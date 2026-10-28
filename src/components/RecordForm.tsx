@@ -88,7 +88,7 @@ export function RecordForm({
         if (ok && !onDelete) setV(emptyRecord(v.employee_id));
       }}
     >
-      <div className="grid grid-cols-2 gap-3">
+      <div className="grid min-w-0 gap-3 sm:grid-cols-2">
         <Field label="Ngày ghi nhận">
           <Input type="date" required value={v.record_date ?? ""} onChange={(e) => set("record_date", e.target.value)} />
         </Field>
@@ -128,7 +128,7 @@ export function RecordForm({
         <Field label="Hạn thanh toán">
           <Input type="date" required value={v.due_date ?? ""} onChange={(e) => set("due_date", e.target.value)} />
         </Field>
-        <Field label="Trạng thái công nợ" className="col-span-2">
+        <Field label="Trạng thái công nợ" className="sm:col-span-2">
           <Select value={v.debt_status ?? "chua_thanh_toan"} onValueChange={(x) => set("debt_status", x)}>
             <SelectTrigger><SelectValue /></SelectTrigger>
             <SelectContent>
@@ -138,7 +138,7 @@ export function RecordForm({
         </Field>
       </div>
 
-      <div className="grid grid-cols-2 gap-3 rounded-lg bg-secondary p-3 text-sm">
+      <div className="grid min-w-0 gap-3 rounded-lg bg-secondary p-3 text-sm sm:grid-cols-2">
         <Calc label="DT thuần nhân viên" value={formatVND(netRevenue(amounts))} />
         <Calc label="DT thuần công ty" value={formatVND(companyRevenue(amounts))} />
         <Calc label="Công nợ" value={formatVND(debtAmount(amounts))} />
@@ -155,7 +155,7 @@ export function RecordForm({
 
 function Field({ label, children, className }: { label: string; children: React.ReactNode; className?: string }) {
   return (
-    <div className={`space-y-1 ${className ?? ""}`}>
+    <div className={`min-w-0 space-y-1 ${className ?? ""}`}>
       <Label className="text-xs text-muted-foreground">{label}</Label>
       {children}
     </div>
@@ -165,7 +165,7 @@ function Calc({ label, value }: { label: string; value: string }) {
   return (
     <div>
       <p className="text-xs text-muted-foreground">{label}</p>
-      <p className="font-semibold text-secondary-foreground">{value}</p>
+      <p className="break-words font-semibold text-secondary-foreground">{value}</p>
     </div>
   );
 }

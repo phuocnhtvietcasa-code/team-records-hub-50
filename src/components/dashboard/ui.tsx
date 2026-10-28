@@ -59,9 +59,9 @@ export function PageHeader({ title, subtitle, children }: { title: string; subti
   return (
     <div className="relative overflow-hidden rounded-2xl bg-dark-gradient p-6 text-sidebar-foreground shadow-card">
       <div className="absolute -right-10 -top-10 h-48 w-48 rotate-12 bg-brand-gradient opacity-80 [clip-path:polygon(25%_0,100%_0,75%_100%,0_100%)]" />
-      <div className="relative flex flex-wrap items-end justify-between gap-4">
-        <div>
-          <h1 className="text-3xl font-semibold">{title}</h1>
+      <div className="relative grid min-w-0 gap-4 sm:flex sm:flex-wrap sm:items-end sm:justify-between">
+        <div className="min-w-0">
+          <h1 className="break-words text-2xl font-semibold sm:text-3xl">{title}</h1>
           <p className="mt-1 text-sm text-sidebar-foreground/70">{subtitle}</p>
         </div>
         {children}

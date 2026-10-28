@@ -80,8 +80,8 @@ function EmployeesPage() {
 
   return (
     <div className="space-y-6">
-      <div className="flex items-end justify-between">
-        <h1 className="text-3xl font-semibold">Nhân viên</h1>
+      <div className="grid grid-cols-[minmax(0,1fr)_auto] items-end gap-3 sm:flex sm:justify-between">
+        <h1 className="min-w-0 text-2xl font-semibold sm:text-3xl">Nhân viên</h1>
         {isAdmin && (
           <Button onClick={() => setEdit({ v: { ...blank, code: `NV${String(employees.length + 1).padStart(3, "0")}` } })}>
             <Plus className="h-4 w-4" /> Thêm nhân viên
@@ -89,8 +89,8 @@ function EmployeesPage() {
         )}
       </div>
 
-      <div className="overflow-auto rounded-xl border bg-card shadow-card">
-        <table className="w-full text-sm">
+      <div className="min-w-0 max-w-full overflow-auto overscroll-x-contain rounded-xl border bg-card shadow-card" tabIndex={0} role="region" aria-label="Danh sách nhân viên">
+        <table className="w-full min-w-[900px] text-sm">
           <thead className="bg-muted text-left text-xs text-muted-foreground">
             <tr><th className="p-3">Mã NV</th><th>Họ và tên</th><th>Phòng ban</th><th>Chức vụ</th><th className="px-3">Team</th><th className="pr-3">Team Role</th><th className="text-right">Mục tiêu tháng</th><th>Tài khoản</th><th></th></tr>
           </thead>
@@ -137,7 +137,7 @@ function EmployeesPage() {
                   <Input required value={edit.v[k]} onChange={(e) => setEdit({ ...edit, v: { ...edit.v, [k]: e.target.value } })} />
                 </div>
               ))}
-              <div className="grid grid-cols-2 gap-3">
+              <div className="grid min-w-0 gap-3 sm:grid-cols-2">
                 <div className="space-y-1"><Label htmlFor="employee-team">Team (Tên nhóm)</Label><Input id="employee-team" value={edit.v.team} onChange={(e) => setEdit({ ...edit, v: { ...edit.v, team: e.target.value } })} /></div>
                 <div className="space-y-1"><Label htmlFor="employee-team-role">Team Role</Label><Select value={edit.v.team_role} onValueChange={(team_role) => setEdit({ ...edit, v: { ...edit.v, team_role } })}><SelectTrigger id="employee-team-role"><SelectValue /></SelectTrigger><SelectContent><SelectItem value="member">Thành viên</SelectItem><SelectItem value="leader">Trưởng nhóm</SelectItem></SelectContent></Select></div>
               </div>
@@ -191,7 +191,8 @@ function UserRoles({ employees }: { employees: Employee[] }) {
       <p className="mb-4 text-sm text-muted-foreground">
         Admin: toàn quyền · Quản lý: chỉ xem toàn bộ dữ liệu · Nhân viên: chỉ phiếu của mình (cần liên kết hồ sơ nhân viên).
       </p>
-      <table className="w-full text-sm">
+      <div className="min-w-0 max-w-full overflow-x-auto overscroll-x-contain" tabIndex={0} role="region" aria-label="Tài khoản và phân quyền">
+      <table className="w-full min-w-[640px] text-sm">
         <thead className="text-left text-xs text-muted-foreground"><tr><th className="py-2">Email</th><th>Vai trò</th><th>Hồ sơ nhân viên</th></tr></thead>
         <tbody>
           {users.map((u) => (
@@ -230,6 +231,7 @@ function UserRoles({ employees }: { employees: Employee[] }) {
           ))}
         </tbody>
       </table>
+      </div>
     </div>
   );
 }

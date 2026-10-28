@@ -23,7 +23,7 @@ export function FilterBar() {
   }
 
   return (
-    <div className="flex flex-wrap items-center gap-3 rounded-xl border bg-card p-3 shadow-card">
+    <div className="flex min-w-0 max-w-full flex-wrap items-center gap-3 rounded-xl border bg-card p-3 shadow-card">
       <Popover>
         <PopoverTrigger asChild>
           <Button variant="outline" className="w-56 max-w-full justify-between text-foreground" aria-label="Lọc nhân viên">
@@ -45,14 +45,14 @@ export function FilterBar() {
           </div>
         </PopoverContent>
       </Popover>
-      <div className="inline-flex rounded-lg bg-muted p-1">
+      <div className="grid w-full min-w-0 grid-cols-2 rounded-lg bg-muted p-1 sm:w-auto sm:grid-cols-5">
         {(Object.keys(PERIOD_LABELS) as Period[]).map((p) => (
           <Button
             variant="ghost"
             key={p}
             onClick={() => setPeriod(p)}
             className={cn(
-              "h-8 rounded-md px-3 text-sm font-medium transition-colors",
+              "h-10 min-w-0 rounded-md px-2 text-sm font-medium transition-colors last:col-span-2 sm:h-9 sm:px-3 sm:last:col-span-1",
               period === p ? "bg-primary text-primary-foreground shadow-sm hover:bg-primary hover:text-primary-foreground" : "text-muted-foreground hover:text-foreground",
             )}
           >
