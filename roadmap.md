@@ -1,9 +1,10 @@
 # Repository import
-- [ ] Optimize mobile/tablet layouts and drawer navigation
-- [ ] Add home-screen manifest, Vietcasa icons, and iOS metadata
-- [ ] Verify mobile layouts and home-screen configuration
+- [x] Optimize mobile/tablet layouts and drawer navigation
+- [x] Add home-screen manifest, Vietcasa icons, and iOS metadata
+- [x] Verify public mobile layouts and home-screen configuration; signed-in and physical-device installation checks remain blocked below
 - [x] Import original app source and visual assets
 - [x] Restore the database schema and original sample records
 - [x] Verify public account controls on desktop and phone
 - [ ] Verify signed-in screens and record changes — blocked: this copy has no user accounts; the first account belongs to the owner and becomes Admin
+- [ ] Verify installation on physical iOS/Android — blocked: app is not yet published and no physical devices are available here
 - [x] Record import limitations and results

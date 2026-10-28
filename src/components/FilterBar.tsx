@@ -45,14 +45,14 @@ export function FilterBar() {
           </div>
         </PopoverContent>
       </Popover>
-      <div className="grid w-full min-w-0 grid-cols-4 rounded-lg bg-muted p-1 sm:w-auto">
+      <div className="grid w-full min-w-0 grid-cols-2 rounded-lg bg-muted p-1 sm:w-auto sm:grid-cols-5">
         {(Object.keys(PERIOD_LABELS) as Period[]).map((p) => (
           <Button
             variant="ghost"
             key={p}
             onClick={() => setPeriod(p)}
             className={cn(
-              "h-9 min-w-0 rounded-md px-2 text-sm font-medium transition-colors sm:px-3",
+              "h-10 min-w-0 rounded-md px-2 text-sm font-medium transition-colors last:col-span-2 sm:h-9 sm:px-3 sm:last:col-span-1",
               period === p ? "bg-primary text-primary-foreground shadow-sm hover:bg-primary hover:text-primary-foreground" : "text-muted-foreground hover:text-foreground",
             )}
           >
