@@ -1,7 +1,7 @@
 import { readFileSync } from "node:fs";
 import { describe, expect, it } from "vitest";
 
-const publicFile = (name: string) => readFileSync(new URL(`../../public/${name}`, import.meta.url));
+const publicFile = (name: string) => readFileSync(`${process.cwd()}/public/${name}`);
 const manifest = JSON.parse(publicFile("manifest.json").toString());
 
 describe("Home-screen configuration", () => {
