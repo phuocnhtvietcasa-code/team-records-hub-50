@@ -11,3 +11,5 @@
 
 - Preserve the imported Vietcasa TanStack routes, UI modules, and design tokens; this keeps future changes aligned with the source app.
 - Use this project’s generated Cloud integration and isolated data rather than the source repository’s environment files; imports must not touch the original app’s users or records.
+- Home-screen support is manifest-only with shared head tags in the TanStack root route; no app-shell service worker is needed without an explicit offline request.
+- Authenticated navigation uses the existing Sheet primitive below the desktop breakpoint; reuse the same navigation links to preserve role visibility and drawer accessibility.
