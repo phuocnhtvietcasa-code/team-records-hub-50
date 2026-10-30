@@ -1,4 +1,8 @@
 # Repository import
+- [x] Add saved payment amount and reactive remaining debt with paid override
+- [x] Add three debt detail lists with voucher dialogs, preserving existing charts
+- [x] Test payment rules, entered value submission, and read-only voucher dialog
+- [ ] Verify signed-in payment save/read-back — blocked: no account matches the requesting user, and the preview is signed out
 - [x] Replace home-screen icons with the newly supplied Vietcasa logo and verify served files
 - [x] Optimize mobile/tablet layouts and drawer navigation
 - [x] Add home-screen manifest, Vietcasa icons, and iOS metadata
@@ -6,6 +10,6 @@
 - [x] Import original app source and visual assets
 - [x] Restore the database schema and original sample records
 - [x] Verify public account controls on desktop and phone
-- [ ] Verify signed-in screens and record changes — blocked: this copy has no user accounts; the first account belongs to the owner and becomes Admin
+- [ ] Verify signed-in screens and record changes — blocked: preview is signed out and no account matches the requesting user
 - [ ] Verify installation on physical iOS/Android — blocked: app is not yet published and no physical devices are available here
 - [x] Record import limitations and results

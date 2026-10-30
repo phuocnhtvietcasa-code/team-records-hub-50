@@ -55,8 +55,18 @@ describe("finance rules", () => {
   it("net revenue for company is halved", () => {
     expect(netRevenue({ ...base, nature: "cong_ty" })).toBe(39_000_000);
   });
-  it("remaining debt = gross - deposit", () => {
-    expect(remainingDebt(base)).toBe(70_000_000);
+  it("remaining debt = deposit - user-entered payment", () => {
+    expect(remainingDebt({ ...base, payment_amount: 10_000_000 })).toBe(20_000_000);
+  });
+  it("fully paid overrides remaining debt to zero", () => {
+    expect(remainingDebt({ ...base, payment_amount: 10_000_000, debt_status: "thanh_toan_du" })).toBe(0);
+  });
+  it("remaining debt preserves negative differences and defaults missing payments to zero", () => {
+    expect(remainingDebt({ ...base, payment_amount: 40_000_000 })).toBe(-10_000_000);
+    expect(remainingDebt(base)).toBe(30_000_000);
+  });
+  it("existing dashboard outstanding calculation stays unchanged", () => {
+    expect(outstanding(base)).toBe(70_000_000);
   });
   it("fully paid has no outstanding and no days owed", () => {
     const r = { ...base, debt_status: "thanh_toan_du", record_date: "2026-10-01" };
