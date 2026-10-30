@@ -106,6 +106,7 @@ export type Database = {
           id: string
           kts_commission: number
           nature: string
+          payment_amount: number
           project: string
           project_cost: number
           record_date: string
@@ -126,6 +127,7 @@ export type Database = {
           id?: string
           kts_commission?: number
           nature?: string
+          payment_amount?: number
           project?: string
           project_cost?: number
           record_date?: string
@@ -146,6 +148,7 @@ export type Database = {
           id?: string
           kts_commission?: number
           nature?: string
+          payment_amount?: number
           project?: string
           project_cost?: number
           record_date?: string

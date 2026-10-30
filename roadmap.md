@@ -1,4 +1,7 @@
 # Repository import
+- [ ] Add saved payment amount and reactive remaining debt with paid override
+- [ ] Add three debt detail lists with voucher dialogs, preserving existing charts
+- [ ] Test payment rules and signed-in record flow
 - [x] Replace home-screen icons with the newly supplied Vietcasa logo and verify served files
 - [x] Optimize mobile/tablet layouts and drawer navigation
 - [x] Add home-screen manifest, Vietcasa icons, and iOS metadata
