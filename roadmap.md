@@ -1,4 +1,6 @@
 # Repository import
+- [ ] Configure isolated single-file offline build with hash navigation and unchanged React screens
+- [ ] Connect HTML export to the bundled offline app and verify local persistence
 - [x] Add saved payment amount and reactive remaining debt with paid override
 - [x] Add three debt detail lists with voucher dialogs, preserving existing charts
 - [x] Test payment rules, entered value submission, and read-only voucher dialog
