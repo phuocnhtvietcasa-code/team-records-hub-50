@@ -35,6 +35,7 @@ export function emptyRecord(employeeId: string): FormValues {
     project_cost: 0,
     nature: "ca_nhan",
     deposit: 0,
+    payment_amount: 0,
     due_date: toISODate(due),
     debt_status: "chua_thanh_toan",
   };
@@ -56,6 +57,7 @@ export function RecordForm({
   submitLabel,
   onSubmit,
   onDelete,
+  readOnly = false,
 }: {
   initial: FormValues | SalesRecord;
   employees: Employee[];
@@ -63,6 +65,7 @@ export function RecordForm({
   submitLabel: string;
   onSubmit: (v: FormValues) => Promise<boolean>;
   onDelete?: () => void;
+  readOnly?: boolean;
 }) {
   const [v, setV] = useState<FormValues>(() => {
     const { id: _i, created_at: _c, created_by: _b, ...rest } = initial as SalesRecord;
@@ -74,7 +77,7 @@ export function RecordForm({
   const amounts = {
     gross: n("gross"), discount: n("discount"), accessories: n("accessories"), vat: n("vat"),
     kts_commission: n("kts_commission"), project_cost: n("project_cost"), nature: v.nature ?? "ca_nhan",
-    deposit: n("deposit"), debt_status: v.debt_status ?? "chua_thanh_toan",
+      deposit: n("deposit"), payment_amount: n("payment_amount"), debt_status: v.debt_status ?? "chua_thanh_toan",
   };
 
   return (
@@ -88,7 +91,7 @@ export function RecordForm({
         if (ok && !onDelete) setV(emptyRecord(v.employee_id));
       }}
     >
-      <div className="grid min-w-0 gap-3 sm:grid-cols-2">
+      <fieldset disabled={readOnly} className="grid min-w-0 gap-3 sm:grid-cols-2">
         <Field label="Ngày ghi nhận">
           <Input type="date" required value={v.record_date ?? ""} onChange={(e) => set("record_date", e.target.value)} />
         </Field>
@@ -125,6 +128,9 @@ export function RecordForm({
         <Field label="Tiền cọc">
           <MoneyInput aria-label="Tiền cọc" value={Number(v.deposit ?? 0)} onValueChange={(amount) => set("deposit", amount)} />
         </Field>
+        <Field label="Số tiền thanh toán">
+          <MoneyInput aria-label="Số tiền thanh toán" value={Number(v.payment_amount ?? 0)} onValueChange={(amount) => set("payment_amount", amount)} />
+        </Field>
         <Field label="Hạn thanh toán">
           <Input type="date" required value={v.due_date ?? ""} onChange={(e) => set("due_date", e.target.value)} />
         </Field>
@@ -136,7 +142,7 @@ export function RecordForm({
             </SelectContent>
           </Select>
         </Field>
-      </div>
+      </fieldset>
 
       <div className="grid min-w-0 gap-3 rounded-lg bg-secondary p-3 text-sm sm:grid-cols-2">
         <Calc label="DT thuần nhân viên" value={formatVND(netRevenue(amounts))} />
@@ -145,10 +151,10 @@ export function RecordForm({
         <Calc label="Công nợ còn lại" value={formatVND(remainingDebt(amounts))} />
       </div>
 
-      <div className="flex gap-2">
+      {!readOnly && <div className="flex gap-2">
         <Button type="submit" className="flex-1" disabled={busy || !v.employee_id}>{busy ? "Đang lưu..." : submitLabel}</Button>
         {onDelete && <Button type="button" variant="destructive" onClick={onDelete}>Xóa</Button>}
-      </div>
+      </div>}
     </form>
   );
 }

@@ -29,6 +29,7 @@ export interface RecordAmounts {
   project_cost: number;
   nature: string;
   deposit: number;
+  payment_amount?: number;
   debt_status: string;
 }
 
@@ -134,9 +135,13 @@ export function debtAmount(r: Pick<RecordAmounts, "gross">): number {
   return r.gross;
 }
 
-/** Công nợ còn lại = Công nợ − Tiền cọc. */
-export function remainingDebt(r: Pick<RecordAmounts, "gross" | "deposit">): number {
-  return debtAmount(r) - r.deposit;
+/** Công nợ còn lại = Tiền cọc − Số tiền thanh toán; thanh toán đủ luôn bằng 0. */
+export function remainingDebt(r: Pick<RecordAmounts, "deposit" | "payment_amount" | "debt_status">): number {
+  return r.debt_status === "thanh_toan_du" ? 0 : r.deposit - (r.payment_amount ?? 0);
+}
+
+export function grossPercentage(amount: number, gross: number): number {
+  return gross > 0 ? amount / gross * 100 : 0;
 }
 
 export function isFullyPaid(r: Pick<RecordAmounts, "debt_status">): boolean {
@@ -146,7 +151,7 @@ export function isFullyPaid(r: Pick<RecordAmounts, "debt_status">): boolean {
 /** Số tiền còn phải thu thực tế (không âm, 0 nếu đã thanh toán đủ). */
 export function outstanding(r: Pick<RecordAmounts, "gross" | "deposit" | "debt_status">): number {
   if (isFullyPaid(r)) return 0;
-  return Math.max(remainingDebt(r), 0);
+  return Math.max(debtAmount(r) - r.deposit, 0);
 }
 
 export function collected(r: Pick<RecordAmounts, "gross" | "deposit" | "debt_status">): number {
