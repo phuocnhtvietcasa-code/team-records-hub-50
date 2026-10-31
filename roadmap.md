@@ -1,4 +1,5 @@
 # Repository import
+- [x] Add fail-fast offline output validation and file:// navigation checks — 7 tests passed; browser verifier exercised on a temporary fixture; real offline output is not yet available
 - [ ] Configure isolated single-file offline build with hash navigation and unchanged React screens
 - [ ] Connect HTML export to the bundled offline app and verify local persistence
 - [x] Add saved payment amount and reactive remaining debt with paid override
