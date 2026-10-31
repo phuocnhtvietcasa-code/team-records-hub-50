@@ -1,11 +1,11 @@
 import { createFileRoute, Link, Outlet, redirect, useNavigate } from "@tanstack/react-router";
 import { useQueryClient } from "@tanstack/react-query";
-import { Download, FileText, LogOut, Menu, Settings, TrendingUp, Users, Wallet } from "lucide-react";
+import { Download, FileText, Loader2, LogOut, Menu, Settings, TrendingUp, Users, Wallet } from "lucide-react";
 import { useEffect, useState } from "react";
 import { Sheet, SheetContent, SheetDescription, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 import { BrandLogo } from "@/components/Brand";
 import { Button } from "@/components/ui/button";
-import { exportOfflineHtml } from "@/lib/export-html";
+import { useOfflineDownload } from "@/hooks/use-offline-download";
 import { sessionExpiredByClose } from "@/lib/remember";
 import { supabase } from "@/integrations/supabase/client";
 import { meQuery, ROLE_LABELS, useMe } from "@/lib/data";
@@ -37,6 +37,7 @@ const SYSTEM_NAV = [
 function Layout() {
   const { me, role, isAdmin } = useMe();
   const qc = useQueryClient();
+  const { isExporting, download } = useOfflineDownload();
   const navigate = useNavigate();
   const [menuOpen, setMenuOpen] = useState(false);
 
@@ -129,8 +130,8 @@ function Layout() {
         <main className="app-main min-w-0 p-4 md:p-8">
           <div className="mb-4 flex min-w-0 justify-end">
             {isAdmin && (
-              <Button className="ml-auto bg-foreground text-background hover:bg-foreground/90" onClick={() => exportOfflineHtml(qc)}>
-                <Download className="h-4 w-4" /> Tải file HTML
+              <Button className="ml-auto bg-foreground text-background hover:bg-foreground/90" onClick={download} disabled={isExporting} aria-busy={isExporting}>
+                {isExporting ? <Loader2 className="h-4 w-4 animate-spin" /> : <Download className="h-4 w-4" />} {isExporting ? "Đang tạo file..." : "Tải file HTML"}
               </Button>
             )}
           </div>
