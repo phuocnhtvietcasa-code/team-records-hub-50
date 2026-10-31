@@ -11,9 +11,9 @@
     "lint": "eslint .",
     "format": "prettier --write .",
     "test": "vitest run",
-    "test:watch": "vitest"
-    ,"verify:offline": "python3 scripts/verify_offline.py dist/offline"
-    ,"postbuild:offline": "bun run verify:offline"
+    "test:watch": "vitest",
+    "verify:offline": "python3 scripts/verify_offline.py dist/offline",
+    "postbuild:offline": "bun run verify:offline"
   },
   "overrides": {
     "rolldown": "1.2.1"
