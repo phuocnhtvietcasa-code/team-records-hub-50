@@ -84,6 +84,7 @@ async def check_pages(html, screenshots):
         errors = []
         external = []
         page.on("pageerror", lambda e: errors.append(str(e)))
+        page.on("console", lambda message: errors.append(message.text) if message.type == "error" else None)
 
         async def guard(route):
             url = route.request.url
@@ -102,7 +103,10 @@ async def check_pages(html, screenshots):
                 href = await link.get_attribute("href")
                 if not href or "#" + path not in href:
                     raise ValueError(f"Navigation is not hash-based: {path}")
-                await link.click()
+                other_path = next(p for p in PAGES if p != path)
+                await page.get_by_role("link", name=PAGES[other_path], exact=True).first.click()
+                await page.get_by_role("heading", name=PAGES[other_path], exact=True).wait_for()
+                await page.get_by_role("link", name=label, exact=True).first.click()
                 await page.reload(wait_until="load")
                 await page.get_by_role("heading", name=label, exact=True).wait_for()
                 if page.url.split("#")[-1] != path:
@@ -112,6 +116,8 @@ async def check_pages(html, screenshots):
                 )
                 if broken_images:
                     raise ValueError(f"Missing image on {path}")
+                # Let delayed rendering/fetches settle before accepting the page.
+                await page.wait_for_timeout(300)
                 await page.screenshot(path=str(screenshots / (path[1:] + ".png")))
                 print(f"PASS file:// navigation and reload: {path}")
             if errors or external:
