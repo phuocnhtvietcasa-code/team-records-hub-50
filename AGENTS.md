@@ -16,3 +16,4 @@
 - Dashboard voucher details reuse RecordForm in read-only mode; viewing records must not introduce new write permissions.
 - Keep remainingDebt separate from outstanding/collected chart calculations; form settlement changes must not silently alter existing dashboard aggregates.
 - Build the file:// edition separately with TanStack hash history and build-only aliases for local data, root shell, and embedded assets; this preserves the hosted app and reuses its exact screens without a second router framework.
+- Run scripts/verify_offline.py against the offline output after building; its filesystem and network-disabled Chromium checks fail closed without changing the hosted build lifecycle.

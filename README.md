@@ -22,3 +22,17 @@ cd <repository-name>
 npm i
 npm run dev
 ```
+
+## Offline output verification
+
+`bun run verify:offline` checks `dist/offline` and fails unless it contains only
+`index.html`, with all HTML/CSS assets embedded. It then opens each of the five
+application pages via `file://` hash URLs in Chromium with networking disabled,
+checks navigation and reloads, and rejects broken images, external requests, or
+browser exceptions. Screenshots are saved to `/tmp/browser/offline-verification`.
+
+Requires Python 3 and the Python Playwright package with Chromium installed.
+`postbuild:offline` runs this verification automatically for an npm
+`build:offline` lifecycle (or can be called explicitly by an offline build).
+The separate offline build is still pending; the hosted `build` is unchanged.
+Missing output intentionally fails rather than validating the hosted build.
