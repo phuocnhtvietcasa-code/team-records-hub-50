@@ -2,12 +2,13 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useQueryClient } from "@tanstack/react-query";
 import { useRef, useState } from "react";
 import { toast } from "sonner";
-import { Database, Download, FileSpreadsheet, Github, PackageOpen, RotateCcw, Trash2, type LucideIcon } from "lucide-react";
+import { Database, Download, FileSpreadsheet, Github, Loader2, PackageOpen, RotateCcw, Trash2, type LucideIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ExcelImportDialog } from "@/components/ExcelImportDialog";
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from "@/components/ui/alert-dialog";
 import { useMe } from "@/lib/data";
-import { exportBackup, exportOfflineHtml } from "@/lib/export-html";
+import { exportBackup } from "@/lib/export-html";
+import { useOfflineDownload } from "@/hooks/use-offline-download";
 import { decrypt, saveLarge, settings } from "@/lib/storageService";
 
 export const Route = createFileRoute("/_authenticated/cai-dat")({
@@ -27,6 +28,7 @@ export const Route = createFileRoute("/_authenticated/cai-dat")({
 function SettingsPage() {
   const { isAdmin } = useMe();
   const qc = useQueryClient();
+  const { isExporting, download } = useOfflineDownload();
   const fileRef = useRef<HTMLInputElement>(null);
   const [confirmEmpty, setConfirmEmpty] = useState(false);
   const [excelOpen, setExcelOpen] = useState(false);
@@ -47,7 +49,7 @@ function SettingsPage() {
 
   const cards: { icon: LucideIcon; title: string; desc: string; action: string; onClick: () => void; danger?: boolean }[] = [
     { icon: FileSpreadsheet, title: "Nhập dữ liệu Excel", desc: "Nhập phiếu doanh số từ tệp .xlsx, .xls.", action: "Nhập dữ liệu Excel", onClick: () => setExcelOpen(true) },
-    { icon: Download, title: "Tải file HTML", desc: "Xuất toàn bộ dữ liệu đã mã hóa vào một file HTML xem offline.", action: "Tải file HTML", onClick: () => exportOfflineHtml(qc) },
+    { icon: Download, title: "Tải file HTML", desc: "Xuất toàn bộ dữ liệu đã mã hóa vào một file HTML xem offline.", action: "Tải file HTML", onClick: download },
     { icon: Github, title: "Đồng bộ GitHub", desc: "Đồng bộ mã nguồn và dữ liệu với kho GitHub.", action: "Đồng bộ", onClick: soon },
     { icon: Database, title: "Sao lưu dữ liệu", desc: "Tải về file sao lưu đã mã hóa của nhân viên, phiếu và KPI.", action: "Sao lưu", onClick: () => exportBackup(qc) },
     { icon: RotateCcw, title: "Khôi phục dữ liệu", desc: "Mở file sao lưu đã mã hóa và lưu vào trình duyệt.", action: "Chọn file", onClick: () => fileRef.current?.click() },
@@ -71,7 +73,7 @@ function SettingsPage() {
             </div>
             <h2 className="text-lg font-semibold">{c.title}</h2>
             <p className="mt-1 flex-1 text-sm text-muted-foreground">{c.desc}</p>
-            <Button className="mt-5 w-full" variant={c.danger ? "destructive" : "default"} onClick={c.onClick}>{c.action}</Button>
+            <Button className="mt-5 w-full" variant={c.danger ? "destructive" : "default"} onClick={c.onClick} disabled={c.title === "Tải file HTML" && isExporting} aria-busy={c.title === "Tải file HTML" && isExporting}>{c.title === "Tải file HTML" && isExporting ? <><Loader2 className="h-4 w-4 animate-spin" /> Đang tạo file...</> : c.action}</Button>
           </div>
         ))}
       </div>
